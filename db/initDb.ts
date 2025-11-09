@@ -7,9 +7,8 @@ const createTable = async (db: SQLiteDatabase) => {
       color TEXT NOT NULL,
       svg TEXT NOT NULL,
       parentId INTEGER,
-      FOREIGN KEY (parentId) REFERENCES Category(id),
-      CHECK (parentId IS NULL OR parentId != id)    
-  );`;
+      FOREIGN KEY (parentId) REFERENCES Category(id)
+    );`;
   const createTableAccount = `CREATE TABLE IF NOT EXISTS Account (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
