@@ -1,24 +1,33 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { migrateDb } from "@/db/initDb";
+import { Stack } from "expo-router";
+import { SQLiteProvider } from "expo-sqlite";
+import { useEffect } from "react";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [loaded, error] = useFonts({
+    "sf-bold": require("../assets/fonts/SFPRODISPLAYBOLD.otf"),
+    "sf-medium": require("../assets/fonts/SFPRODISPLAYMEDIUM.otf"),
+    "sf-regular": require("../assets/fonts/SFPRODISPLAYREGULAR.otf"),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SQLiteProvider databaseName="mydata.db" onInit={migrateDb}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </SQLiteProvider>
   );
 }
