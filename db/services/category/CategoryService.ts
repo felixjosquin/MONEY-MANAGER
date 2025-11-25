@@ -1,6 +1,6 @@
 import CategoryMapper from "@/mappers/CategoryMapper";
 import { SQLiteDatabase } from "expo-sqlite";
-import { GroupedCategory } from "../types/GroupedCategory";
+import { GroupedCategory } from "../../types/GroupedCategory";
 import CategoryConfig from "./CategoryConfig";
 
 export default class CategoryService {

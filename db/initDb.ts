@@ -27,32 +27,51 @@ const dropTable = async (db: SQLiteDatabase) => {
 };
 
 const insertTable = async (db: SQLiteDatabase) => {
-  const statement = await db.prepareAsync(
-    "INSERT INTO Category (name, color, svg, parentId) VALUES ($name, $color, $svg_path, $parent_id)"
+  const statementCategory = await db.prepareAsync(
+    "INSERT INTO Category (name, color, svg, parentId) VALUES ($name, $color, $svg, $parent_id)"
   );
-  statement.executeAsync({
+  statementCategory.executeAsync({
     $name: "Primary",
     $color: "#ffffff",
-    $svg_path: "",
+    $svg: "",
     $parent_id: null,
   });
-  statement.executeAsync({
+  statementCategory.executeAsync({
     $name: "sub-category-2",
     $color: "#ffffff",
-    $svg_path: "dsfs",
+    $svg: "dsfs",
     $parent_id: 1,
   });
-  statement.executeAsync({
+  statementCategory.executeAsync({
     $name: "sub-category-1",
     $color: "#ffffff",
-    $svg_path: "fsdf",
+    $svg: "fsdf",
     $parent_id: 1,
   });
-  statement.executeAsync({
+  statementCategory.executeAsync({
     $name: "Primary-2",
     $color: "#ffffff",
-    $svg_path: "fsd",
+    $svg: "fsd",
     $parent_id: null,
+  });
+  const statementAccount = await db.prepareAsync(
+    "INSERT INTO Account (name, svg, balance) VALUES ($name, $svg, $balance)"
+  );
+
+  statementAccount.executeAsync({
+    $name: "Banque",
+    $svg: "bank-outline",
+    $balance: 10,
+  });
+  statementAccount.executeAsync({
+    $name: "Cash",
+    $svg: "piggy-bank-solid",
+    $balance: 10,
+  });
+  statementAccount.executeAsync({
+    $name: "Lydia",
+    $svg: "bx-dollar-circle",
+    $balance: 10,
   });
 };
 
