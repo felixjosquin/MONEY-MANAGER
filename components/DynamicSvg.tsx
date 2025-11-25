@@ -1,10 +1,11 @@
 import { PALETTECOLORS } from "@/constants/colors/paletteColors";
-import { ICONS } from "@/constants/icons/iconCategory";
+import { ICONS } from "@/constants/icons/icons";
 import { RGB } from "@/types";
+import { IconsName } from "@/types/IconsTypes";
 import React from "react";
 
 interface Props {
-  name: keyof typeof ICONS;
+  name: IconsName;
   width?: number;
   height?: number;
   color?: RGB;
