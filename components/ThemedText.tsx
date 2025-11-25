@@ -8,30 +8,31 @@ type FontWeight = "medium" | "regular" | "bold";
 type Props = TextProps & {
   fontWeight?: FontWeight;
   fontSize?: FontSize;
-  color?: TextColorNames;
+  colorVariant?: TextColorNames;
 };
 
 export default function ThemedText({
   fontWeight,
   fontSize,
-  color,
+  colorVariant,
+  style,
   ...rest
 }: Props) {
-  const colors = useThemeColor();
+  const themeColors = useThemeColor();
   return (
     <Text
       style={[
-        style[fontSize ?? "md"],
-        style[fontWeight ?? "medium"],
-        { color: colors[`text-${color ?? "primary"}`] },
-        rest.style,
+        styleSheet[fontSize ?? "md"],
+        styleSheet[fontWeight ?? "medium"],
+        { color: themeColors[`text-${colorVariant ?? "primary"}`] },
+        style,
       ]}
       {...rest}
     />
   );
 }
 
-const style = StyleSheet.create({
+const styleSheet = StyleSheet.create({
   sm: { fontSize: 11, lineHeight: 16 },
   md: { fontSize: 13, lineHeight: 20 },
   lg: { fontSize: 15, lineHeight: 22 },
