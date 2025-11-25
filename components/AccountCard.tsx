@@ -12,12 +12,7 @@ type Props = {
 export function AccountCard({ account }: Props) {
   return (
     <ThemedView bgVariant="brand-primary" style={styleAccountCard.container}>
-      <DynamicSvg
-        name={account.svg as any}
-        width={48}
-        height={48}
-        color={"#FF0000"}
-      />
+      <DynamicSvg name={account.svg} width={48} height={48} color={"#FF0000"} />
       <ThemedText>{account.name}</ThemedText>
     </ThemedView>
   );

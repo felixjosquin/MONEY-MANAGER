@@ -1,5 +1,7 @@
+import { ICONS } from "@/constants/icons/icons";
 import AccountDAO from "@/db/dao/AccountDAO";
 import Account from "@/models/Account";
+import { IconsName } from "@/types/IconsTypes";
 
 export default class AccountMapper {
   static getAccounts(rawData: AccountDAO[]): Account[] {
@@ -7,9 +9,10 @@ export default class AccountMapper {
   }
 
   static getAccount(rawData: AccountDAO): Account {
+    const isValidIcon = Object.keys(ICONS).includes(rawData.svg);
     return {
       id: rawData.id,
-      svg: rawData.svg,
+      svg: isValidIcon ? (rawData.svg as IconsName) : "question",
       name: rawData.name,
       balance: rawData.balance,
     };
