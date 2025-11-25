@@ -7,11 +7,15 @@ import { DynamicSvg } from "./DynamicSvg";
 
 type Props = {
   account: Account;
+  isSelect: boolean;
 };
 
-export function AccountCard({ account }: Props) {
+export function AccountCard({ account, isSelect }: Props) {
   return (
-    <ThemedView bgVariant="brand-primary" style={styleAccountCard.container}>
+    <ThemedView
+      bgVariant={isSelect ? "brand-primary" : "primary"}
+      style={styleAccountCard.container}
+    >
       <DynamicSvg name={account.svg} width={48} height={48} color={"#FF0000"} />
       <ThemedText>{account.name}</ThemedText>
     </ThemedView>
