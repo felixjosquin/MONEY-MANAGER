@@ -18,6 +18,7 @@ const createTable = async (db: SQLiteDatabase) => {
   const createTableOperation = `CREATE TABLE IF NOT EXISTS Operation (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date TEXT NOT NULL,
+      type TEXT CHECK(type IN ('EXPENSE','INCOME')) NOT NULL,
       amount INTEGER NOT NULL,
       categoryId INTEGER NOT NULL,
       FOREIGN KEY (categoryId) REFERENCES Category(id)
@@ -96,25 +97,29 @@ const insertTable = async (db: SQLiteDatabase) => {
   });
 
   const statementOperation = await db.prepareAsync(
-    "INSERT INTO Operation (date, amount, categoryId) VALUES ($date, $amount, $categoryId)"
+    "INSERT INTO Operation (date, type, amount, categoryId) VALUES ($date, $type, $amount, $categoryId)"
   );
   statementOperation.executeAsync({
     $date: "2025-11-29",
     $amount: 100,
+    $type: "EXPENSE",
     $categoryId: 2,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
+    $type: "EXPENSE",
     $amount: 200,
     $categoryId: 2,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
+    $type: "EXPENSE",
     $amount: 600,
     $categoryId: 3,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
+    $type: "EXPENSE",
     $amount: 400,
     $categoryId: 5,
   });
