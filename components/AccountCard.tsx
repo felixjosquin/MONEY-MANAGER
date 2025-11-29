@@ -1,5 +1,5 @@
 import { ThemedView } from "./ThemedView";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Account from "@/models/Account";
 import ThemedText from "./ThemedText";
 import { DynamicSvg } from "./DynamicSvg";
@@ -10,18 +10,29 @@ type Props = {
 
 export function AccountCard({ account }: Props) {
   return (
-    <ThemedView style={styleAccountCard.container} bgVariant="transparent">
-      <DynamicSvg name={account.svg} width={48} height={48} color={"#000000"} />
-      <ThemedText>{account.name}</ThemedText>
+    <ThemedView style={style.container} bgVariant="transparent">
+      <DynamicSvg name={account.svg} width={40} height={40} color={"#000000"} />
+      <View style={style.textContainer}>
+        <ThemedText>{account.name}</ThemedText>
+        <ThemedText fontSize="sm" colorVariant="secondary">
+          {new Intl.NumberFormat("fr-FR", {
+            style: "currency",
+            currency: "EUR",
+          }).format(account.balance)}
+        </ThemedText>
+      </View>
     </ThemedView>
   );
 }
 
-const styleAccountCard = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+  },
+  textContainer: {
+    alignItems: "center",
   },
 });
