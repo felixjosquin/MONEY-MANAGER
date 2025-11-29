@@ -15,63 +15,108 @@ const createTable = async (db: SQLiteDatabase) => {
       svg TEXT NOT NULL,
       balance INTEGER NOT NULL
     );`;
+  const createTableOperation = `CREATE TABLE IF NOT EXISTS Operation (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      date TEXT NOT NULL,
+      amount INTEGER NOT NULL,
+      categoryId INTEGER NOT NULL,
+      FOREIGN KEY (categoryId) REFERENCES Category(id)
+    );`;
+
   await db.runAsync(createTableCategory);
   await db.runAsync(createTableAccount);
+  await db.runAsync(createTableOperation);
 };
 
 const dropTable = async (db: SQLiteDatabase) => {
-  db.execAsync(`
+  await db.execAsync(`
     DROP TABLE IF EXISTS Category;
     DROP TABLE IF EXISTS Account;
+    DROP TABLE IF EXISTS Operation;
   `);
 };
 
 const insertTable = async (db: SQLiteDatabase) => {
   const statementCategory = await db.prepareAsync(
-    "INSERT INTO Category (name, color, svg, parentId) VALUES ($name, $color, $svg, $parent_id)"
+    "INSERT INTO Category (id, name, color, svg, parentId) VALUES ($id, $name, $color, $svg, $parent_id)"
   );
   statementCategory.executeAsync({
-    $name: "Primary",
-    $color: "#ffffff",
-    $svg: "",
+    $name: "Nourriture",
+    $color: "#96e1e4",
+    $svg: "fork",
     $parent_id: null,
+    $id: 1,
   });
   statementCategory.executeAsync({
-    $name: "sub-category-2",
-    $color: "#ffffff",
-    $svg: "dsfs",
+    $name: "Supermarché",
+    $color: "#cf6262",
+    $svg: "cash",
     $parent_id: 1,
+    $id: 2,
   });
   statementCategory.executeAsync({
-    $name: "sub-category-1",
-    $color: "#ffffff",
-    $svg: "fsdf",
+    $name: "Fruits & Légumes",
+    $color: "#78d487",
+    $svg: "apple",
     $parent_id: 1,
+    $id: 3,
   });
   statementCategory.executeAsync({
-    $name: "Primary-2",
-    $color: "#ffffff",
-    $svg: "fsd",
+    $name: "Loisir",
+    $color: "#636363",
+    $svg: "people",
     $parent_id: null,
+    $id: 4,
   });
+  statementCategory.executeAsync({
+    $name: "Ping-Pong",
+    $color: "#689b82",
+    $svg: "people",
+    $parent_id: 4,
+    $id: 5,
+  });
+
   const statementAccount = await db.prepareAsync(
     "INSERT INTO Account (name, svg, balance) VALUES ($name, $svg, $balance)"
   );
-
   statementAccount.executeAsync({
     $name: "Banque",
-    $svg: "bank-outline",
-    $balance: 10,
+    $svg: "bank",
+    $balance: 6523,
   });
   statementAccount.executeAsync({
     $name: "Cash",
-    $svg: "piggy-bank-solid",
-    $balance: 10,
+    $svg: "piggy-bank",
+    $balance: 5616,
   });
   statementAccount.executeAsync({
     $name: "Lydia",
-    $svg: "bx-dollar-circle",
-    $balance: 10,
+    $svg: "dollar",
+    $balance: 235,
+  });
+
+  const statementOperation = await db.prepareAsync(
+    "INSERT INTO Operation (date, amount, categoryId) VALUES ($date, $amount, $categoryId)"
+  );
+  statementOperation.executeAsync({
+    $date: "2025-11-29",
+    $amount: 100,
+    $categoryId: 2,
+  });
+  statementOperation.executeAsync({
+    $date: "2025-11-29",
+    $amount: 200,
+    $categoryId: 2,
+  });
+  statementOperation.executeAsync({
+    $date: "2025-11-29",
+    $amount: 600,
+    $categoryId: 3,
+  });
+  statementOperation.executeAsync({
+    $date: "2025-11-29",
+    $amount: 400,
+    $categoryId: 5,
   });
 };
 
