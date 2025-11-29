@@ -14,7 +14,7 @@ export default class AccountMapper {
       id: rawData.id,
       svg: isValidIcon ? (rawData.svg as IconsName) : "question",
       name: rawData.name,
-      balance: rawData.balance,
+      balance: rawData.balance / 10,
     };
   }
 }
