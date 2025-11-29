@@ -1,4 +1,4 @@
-import { THEMECOLORS } from "@/constants/colors/themeColors";
+import { THEMECOLORS } from "@/constants/styles/themeColors";
 import { useColorScheme } from "react-native";
 
 export function useThemeColor() {

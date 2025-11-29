@@ -1,4 +1,4 @@
-import { RADIUSVALUE } from "@/constants/colors/radiusValue";
+import { RADIUSVALUE } from "@/constants/styles/spaceValues";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { BgColorNames, BorderColorNames, RadiusVariant } from "@/types";
 import { View, ViewProps, ViewStyle } from "react-native";
@@ -6,7 +6,7 @@ import { View, ViewProps, ViewStyle } from "react-native";
 type Props = ViewProps & {
   borderVariant?: BorderColorNames;
   bgVariant?: BgColorNames;
-  raduisVariant?: RadiusVariant
+  raduisVariant?: RadiusVariant;
 };
 
 export function ThemedView({
@@ -21,7 +21,7 @@ export function ThemedView({
     backgroundColor: themeColors[`bg-${bgVariant ?? "primary"}`],
     borderColor: themeColors[`border-${borderVariant ?? "primary"}`],
     borderWidth: borderVariant ? 1 : 0,
-    borderRadius: RADIUSVALUE[raduisVariant ?? "none"]
+    borderRadius: RADIUSVALUE[raduisVariant ?? "none"],
   };
   return <View style={[viewStyle, style]} {...rest} />;
 }

@@ -1,3 +1,3 @@
 export * from "./categoryTypes";
-export * from "./colorsTypes";
+export * from "./stylesTypes";
 export * from "./utils";
