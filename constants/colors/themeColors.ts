@@ -18,6 +18,7 @@ export const THEMECOLORS = {
     "border-secondary": THEMEGRAYCOLOR.light["gray-200"],
     "border-disabled": THEMEGRAYCOLOR.light["gray-300"],
     "border-brand": PALETTECOLORS["brand-500"],
+    "border-transparent": PALETTECOLORS.transparant,
 
     "fg-primary": THEMEGRAYCOLOR.light["gray-900"],
     "fg-secondary": THEMEGRAYCOLOR.light["gray-700"],
@@ -33,6 +34,7 @@ export const THEMECOLORS = {
     "bg-secondary-solid": THEMEGRAYCOLOR.light["gray-600"],
     "bg-brand-primary": PALETTECOLORS["brand-50"],
     "bg-brand-secondary": PALETTECOLORS["brand-100"],
+    "bg-transparent": PALETTECOLORS.transparant
   },
   dark: {
     "text-primary": THEMEGRAYCOLOR.light["gray-900"],
@@ -51,6 +53,7 @@ export const THEMECOLORS = {
     "border-secondary": THEMEGRAYCOLOR.light["gray-200"],
     "border-disabled": THEMEGRAYCOLOR.light["gray-300"],
     "border-brand": PALETTECOLORS["brand-500"],
+    "border-transparent": PALETTECOLORS.transparant,
 
     "fg-primary": THEMEGRAYCOLOR.light["gray-900"],
     "fg-secondary": THEMEGRAYCOLOR.light["gray-700"],
@@ -66,5 +69,6 @@ export const THEMECOLORS = {
     "bg-secondary-solid": THEMEGRAYCOLOR.light["gray-600"],
     "bg-brand-primary": PALETTECOLORS["brand-50"],
     "bg-brand-secondary": PALETTECOLORS["brand-100"],
+    "bg-transparent": PALETTECOLORS.transparant
   },
 };

@@ -1,3 +1,4 @@
+import { RADIUSVALUE } from "@/constants/colors/radiusValue";
 import { THEMECOLORS } from "@/constants/colors/themeColors";
 
 export type RGB = `#${string}`;
@@ -15,3 +16,5 @@ export type TextColorNames = ExtractColorNames<ThemeColors, "text">;
 export type BgColorNames = ExtractColorNames<ThemeColors, "bg">;
 export type FgColorNames = ExtractColorNames<ThemeColors, "fg">;
 export type BorderColorNames = ExtractColorNames<ThemeColors, "border">;
+
+export type RadiusVariant = keyof (typeof RADIUSVALUE);

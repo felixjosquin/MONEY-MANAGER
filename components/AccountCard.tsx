@@ -1,22 +1,17 @@
 import { ThemedView } from "./ThemedView";
 import { StyleSheet } from "react-native";
-import { Image } from "expo-image";
 import Account from "@/models/Account";
 import ThemedText from "./ThemedText";
 import { DynamicSvg } from "./DynamicSvg";
 
 type Props = {
   account: Account;
-  isSelect: boolean;
 };
 
-export function AccountCard({ account, isSelect }: Props) {
+export function AccountCard({ account }: Props) {
   return (
-    <ThemedView
-      bgVariant={isSelect ? "brand-primary" : "primary"}
-      style={styleAccountCard.container}
-    >
-      <DynamicSvg name={account.svg} width={48} height={48} color={"#FF0000"} />
+    <ThemedView style={styleAccountCard.container} bgVariant="transparent">
+      <DynamicSvg name={account.svg} width={48} height={48} color={"#000000"} />
       <ThemedText>{account.name}</ThemedText>
     </ThemedView>
   );

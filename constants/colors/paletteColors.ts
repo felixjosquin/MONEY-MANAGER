@@ -1,6 +1,7 @@
 export const PALETTECOLORS = {
   white: "#ffffff",
   black: "#000000",
+  transparant: "rgba(0,0,0,0)",
 
   "brand-25": "#fcfaff",
   "brand-50": "#f9f5ff",
