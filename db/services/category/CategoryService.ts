@@ -16,4 +16,18 @@ export default class CategoryService {
       JSON.stringify(CategoryMapper.getCategories(groupedCategory), null, 2)
     );
   }
+
+  static async getCategoryWithTotal(db: SQLiteDatabase): Promise<void> {
+    const groupedCategory = await db.getAllAsync<GroupedCategoryWithTotal>(
+      CategoryConfig.getGroupedCategoryWithTotal
+    );
+    console.log(JSON.stringify(groupedCategory, null, 2));
+    console.log(
+      JSON.stringify(
+        CategoryMapper.getCategoriesWithTotal(groupedCategory),
+        null,
+        2
+      )
+    );
+  }
 }
