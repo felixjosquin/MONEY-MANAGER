@@ -1,6 +1,6 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ReactElement } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const MainLayout = ({ children }: { children: ReactElement[] }) => {
@@ -10,7 +10,7 @@ export const MainLayout = ({ children }: { children: ReactElement[] }) => {
     <SafeAreaView
       style={{ backgroundColor: themeColor["bg-primary"], flex: 1 }}
     >
-      <ScrollView style={styles.container}>{children}</ScrollView>
+      <View style={styles.container}>{children}</View>
     </SafeAreaView>
   );
 };
@@ -19,5 +19,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 4,
     paddingTop: 4,
+    gap: 4,
+    alignItems: "center",
   },
 });
