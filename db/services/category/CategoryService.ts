@@ -1,7 +1,10 @@
 import CategoryMapper from "@/mappers/CategoryMapper";
 import { SQLiteDatabase } from "expo-sqlite";
-import { GroupedCategory } from "../../types/GroupedCategory";
 import CategoryConfig from "./CategoryConfig";
+import {
+  GroupedCategory,
+  GroupedCategoryWithTotal,
+} from "@/db/dao/CategoryDAO";
 
 export default class CategoryService {
   static async getCategory(db: SQLiteDatabase): Promise<void> {

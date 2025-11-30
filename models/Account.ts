@@ -1,4 +1,4 @@
-import { IconsName } from "@/types/IconsTypes";
+import { IconsName } from "@/types/iconsTypes";
 
 export default interface Account {
   id: number;

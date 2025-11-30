@@ -1,6 +1,11 @@
-import { GroupedCategory } from "@/db/types/GroupedCategory";
-import Category from "@/models/Category";
-import { StandaloneCategory } from "@/types";
+import {
+  GroupedCategory,
+  GroupedCategoryWithTotal,
+} from "@/db/dao/CategoryDAO";
+import { Category, CategoryWithTotal } from "@/models/Category";
+import { RGB } from "@/types";
+
+type StandaloneCategory = Omit<Category, "subCategory">;
 
 export default class CategoryMapper {
   static getCategories(rawData: GroupedCategory[]): Category[] {

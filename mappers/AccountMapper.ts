@@ -1,7 +1,7 @@
 import { ICONS } from "@/constants/icons/icons";
 import AccountDAO from "@/db/dao/AccountDAO";
 import Account from "@/models/Account";
-import { IconsName } from "@/types/IconsTypes";
+import { IconsName } from "@/types";
 
 export default class AccountMapper {
   static getAccounts(rawData: AccountDAO[]): Account[] {
