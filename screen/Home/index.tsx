@@ -20,7 +20,14 @@ export function Home() {
   return (
     <MainLayout>
       <AccountSelector accounts={accounts} />
-      <PieChart data={[]} size={100}></PieChart>
+      <PieChart
+        data={[
+          { label: "nourriture", color: "#9c659c", key: "food", value: 523 },
+          { label: "loisir", color: "#659c81", key: "leisure", value: 230 },
+          { label: "autres", color: "#5952b3", key: "other", value: 153 },
+        ]}
+        size={100}
+      ></PieChart>
     </MainLayout>
   );
 }
