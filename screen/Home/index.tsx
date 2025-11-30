@@ -5,6 +5,7 @@ import { MainLayout } from "../MainLayout";
 import { useEffect } from "react";
 import CategoryService from "@/db/services/category/CategoryService";
 import { useSQLiteContext } from "expo-sqlite";
+import { PieChart } from "@/components/PieChart";
 
 export function Home() {
   const { data: accounts } = useDbQuery({
@@ -19,6 +20,7 @@ export function Home() {
   return (
     <MainLayout>
       <AccountSelector accounts={accounts} />
+      <PieChart data={[]} size={100}></PieChart>
     </MainLayout>
   );
 }
