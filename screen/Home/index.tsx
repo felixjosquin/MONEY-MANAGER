@@ -22,9 +22,27 @@ export function Home() {
       <AccountSelector accounts={accounts} />
       <PieChart
         data={[
-          { label: "nourriture", color: "#9c659c", key: "food", value: 523 },
-          { label: "loisir", color: "#659c81", key: "leisure", value: 230 },
-          { label: "autres", color: "#5952b3", key: "other", value: 153 },
+          {
+            label: "nourriture",
+            color: "#9c659c",
+            key: "food",
+            value: 523,
+            svgName: "apple",
+          },
+          {
+            label: "loisir",
+            color: "#659c81",
+            key: "leisure",
+            value: 230,
+            svgName: "apple",
+          },
+          {
+            label: "autres",
+            color: "#5952b3",
+            key: "other",
+            value: 153,
+            svgName: "apple",
+          },
         ]}
         size={100}
       ></PieChart>
