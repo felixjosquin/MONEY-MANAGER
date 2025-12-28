@@ -35,6 +35,8 @@ export const THEMECOLORS = {
     "bg-brand-primary": PALETTECOLORS["brand-50"],
     "bg-brand-secondary": PALETTECOLORS["brand-100"],
     "bg-transparent": PALETTECOLORS.transparant,
+
+    "color-transparency": "#ffffff1b",
   },
   dark: {
     "text-primary": THEMEGRAYCOLOR.light["gray-900"],
@@ -70,5 +72,7 @@ export const THEMECOLORS = {
     "bg-brand-primary": PALETTECOLORS["brand-50"],
     "bg-brand-secondary": PALETTECOLORS["brand-100"],
     "bg-transparent": PALETTECOLORS.transparant,
+
+    "color-transparency": "#00000055",
   },
 };

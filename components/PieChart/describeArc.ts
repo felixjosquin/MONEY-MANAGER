@@ -7,20 +7,17 @@ export function generateArc(
   endAngle: number
   // cornerRadius: number = 0
 ) {
-  const startRad = ((startAngle - 90) * Math.PI) / 180;
-  const endRad = ((endAngle - 90) * Math.PI) / 180;
+  const x1 = cx + radiusOuter * Math.cos(startAngle);
+  const y1 = cy + radiusOuter * Math.sin(startAngle);
+  const x2 = cx + radiusOuter * Math.cos(endAngle);
+  const y2 = cy + radiusOuter * Math.sin(endAngle);
 
-  const x1 = cx + radiusOuter * Math.cos(startRad);
-  const y1 = cy + radiusOuter * Math.sin(startRad);
-  const x2 = cx + radiusOuter * Math.cos(endRad);
-  const y2 = cy + radiusOuter * Math.sin(endRad);
+  const x3 = cx + radiusInner * Math.cos(endAngle);
+  const y3 = cy + radiusInner * Math.sin(endAngle);
+  const x4 = cx + radiusInner * Math.cos(startAngle);
+  const y4 = cy + radiusInner * Math.sin(startAngle);
 
-  const x3 = cx + radiusInner * Math.cos(endRad);
-  const y3 = cy + radiusInner * Math.sin(endRad);
-  const x4 = cx + radiusInner * Math.cos(startRad);
-  const y4 = cy + radiusInner * Math.sin(startRad);
-
-  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+  const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
 
   return [
     `M ${x1} ${y1}`,
