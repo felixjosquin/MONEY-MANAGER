@@ -1,3 +1,7 @@
+import { degreeToRadian } from "./utils";
+const PAD_ANGLE_INNER = degreeToRadian(2);
+const PAD_ANGLE_OUTER = degreeToRadian(1);
+
 export function generateArc(
   cx: number,
   cy: number,
@@ -5,17 +9,16 @@ export function generateArc(
   radiusOuter: number,
   startAngle: number,
   endAngle: number
-  // cornerRadius: number = 0
 ) {
-  const x1 = cx + radiusOuter * Math.cos(startAngle);
-  const y1 = cy + radiusOuter * Math.sin(startAngle);
-  const x2 = cx + radiusOuter * Math.cos(endAngle);
-  const y2 = cy + radiusOuter * Math.sin(endAngle);
+  const x1 = cx + radiusOuter * Math.cos(startAngle + PAD_ANGLE_OUTER / 2);
+  const y1 = cy + radiusOuter * Math.sin(startAngle + PAD_ANGLE_OUTER / 2);
+  const x2 = cx + radiusOuter * Math.cos(endAngle - PAD_ANGLE_OUTER / 2);
+  const y2 = cy + radiusOuter * Math.sin(endAngle - PAD_ANGLE_OUTER / 2);
 
-  const x3 = cx + radiusInner * Math.cos(endAngle);
-  const y3 = cy + radiusInner * Math.sin(endAngle);
-  const x4 = cx + radiusInner * Math.cos(startAngle);
-  const y4 = cy + radiusInner * Math.sin(startAngle);
+  const x3 = cx + radiusInner * Math.cos(endAngle - PAD_ANGLE_INNER / 2);
+  const y3 = cy + radiusInner * Math.sin(endAngle - PAD_ANGLE_INNER / 2);
+  const x4 = cx + radiusInner * Math.cos(startAngle + PAD_ANGLE_INNER / 2);
+  const y4 = cy + radiusInner * Math.sin(startAngle + PAD_ANGLE_INNER / 2);
 
   const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
 

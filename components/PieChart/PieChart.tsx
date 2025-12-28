@@ -4,16 +4,10 @@ import { ViewProps, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { PieChartSlice } from "./PieChartSlice";
 import { degreeToRadian, percentageToRadian } from "./utils";
+import { ChartSegment } from "./type";
+import { PieChartLegend } from "./PieChartLegend";
 
 const MIN_ANGLE = degreeToRadian(5);
-
-type ChartSegment = {
-  key: string;
-  value: number;
-  label: string;
-  color: RGB;
-  svgName: IconsName;
-};
 
 type Props = ViewProps & {
   data: ChartSegment[];
@@ -37,12 +31,7 @@ export const PieChart = ({
   let cumulativeAngle = -Math.PI / 2;
 
   return (
-    <ThemedView
-      bgVariant="primary"
-      borderVariant="primary"
-      raduisVariant="md"
-      style={[styles.container, style]}
-    >
+    <ThemedView bgVariant="primary" style={[styles.container, style]}>
       <Svg width={size} height={size}>
         {data.map(({ value, color, key, svgName }) => {
           const angle = percentageToRadian(value / total);
@@ -52,9 +41,9 @@ export const PieChart = ({
           return (
             <PieChartSlice
               key={key}
-              angle={angle}
+              startAngle={offsetAngle}
               color={color}
-              offsetAngle={offsetAngle}
+              endAngle={offsetAngle + angle}
               innerRadius={innerRadius}
               outerRadius={outerRaduis}
               svgId={svgName}
@@ -64,6 +53,7 @@ export const PieChart = ({
           );
         })}
       </Svg>
+      <PieChartLegend data={data} />
     </ThemedView>
   );
 };
