@@ -7,6 +7,7 @@ const createTable = async (db: SQLiteDatabase) => {
       color TEXT NOT NULL,
       svg TEXT NOT NULL,
       parentId INTEGER,
+      type TEXT CHECK(type IN ('EXPENSE','INCOME')) NOT NULL,
       FOREIGN KEY (parentId) REFERENCES Category(id)
     );`;
   const createTableAccount = `CREATE TABLE IF NOT EXISTS Account (
@@ -18,7 +19,6 @@ const createTable = async (db: SQLiteDatabase) => {
   const createTableOperation = `CREATE TABLE IF NOT EXISTS Operation (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date TEXT NOT NULL,
-      type TEXT CHECK(type IN ('EXPENSE','INCOME')) NOT NULL,
       amount INTEGER NOT NULL,
       categoryId INTEGER NOT NULL,
       FOREIGN KEY (categoryId) REFERENCES Category(id)
@@ -39,17 +39,19 @@ const dropTable = async (db: SQLiteDatabase) => {
 
 const insertTable = async (db: SQLiteDatabase) => {
   const statementCategory = await db.prepareAsync(
-    "INSERT INTO Category (id, name, color, svg, parentId) VALUES ($id, $name, $color, $svg, $parent_id)"
+    "INSERT INTO Category (id, name,type, color, svg, parentId) VALUES ($id, $name,$type, $color, $svg, $parent_id)"
   );
   statementCategory.executeAsync({
     $name: "Nourriture",
     $color: "#96e1e4",
     $svg: "fork",
+    $type: "EXPENSE",
     $parent_id: null,
     $id: 1,
   });
   statementCategory.executeAsync({
     $name: "Supermarché",
+    $type: "EXPENSE",
     $color: "#cf6262",
     $svg: "cash",
     $parent_id: 1,
@@ -57,15 +59,17 @@ const insertTable = async (db: SQLiteDatabase) => {
   });
   statementCategory.executeAsync({
     $name: "Fruits & Légumes",
-    $color: "#78d487",
+    $color: "#212e6c",
     $svg: "apple",
-    $parent_id: 1,
+    $type: "EXPENSE",
+    $parent_id: null,
     $id: 3,
   });
   statementCategory.executeAsync({
     $name: "Loisir",
     $color: "#636363",
     $svg: "people",
+    $type: "EXPENSE",
     $parent_id: null,
     $id: 4,
   });
@@ -73,8 +77,17 @@ const insertTable = async (db: SQLiteDatabase) => {
     $name: "Ping-Pong",
     $color: "#689b82",
     $svg: "people",
+    $type: "EXPENSE",
     $parent_id: 4,
     $id: 5,
+  });
+  statementCategory.executeAsync({
+    $name: "Salaire",
+    $color: "#96e1e4",
+    $svg: "fork",
+    $type: "INCOME",
+    $parent_id: null,
+    $id: 6,
   });
 
   const statementAccount = await db.prepareAsync(
@@ -97,29 +110,25 @@ const insertTable = async (db: SQLiteDatabase) => {
   });
 
   const statementOperation = await db.prepareAsync(
-    "INSERT INTO Operation (date, type, amount, categoryId) VALUES ($date, $type, $amount, $categoryId)"
+    "INSERT INTO Operation (date, amount, categoryId) VALUES ($date, $amount, $categoryId)"
   );
   statementOperation.executeAsync({
     $date: "2025-11-29",
     $amount: 100,
-    $type: "EXPENSE",
     $categoryId: 2,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
-    $type: "EXPENSE",
     $amount: 200,
     $categoryId: 2,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
-    $type: "EXPENSE",
     $amount: 600,
     $categoryId: 3,
   });
   statementOperation.executeAsync({
     $date: "2025-11-29",
-    $type: "EXPENSE",
     $amount: 400,
     $categoryId: 5,
   });

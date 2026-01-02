@@ -1,8 +1,8 @@
-import { IconsName } from "@/types/iconsTypes";
+import { IconName } from "@/types/iconsTypes";
 
 export default interface Account {
   id: number;
   name: string;
-  svg: IconsName;
+  svg: IconName;
   balance: number;
 }

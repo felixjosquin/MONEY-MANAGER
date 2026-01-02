@@ -1,28 +1,42 @@
-import { Prefixed } from "@/types";
-import { NullableId } from "../types";
+import { AccountType, Prefixed } from "@/types";
 
 export interface CategoryDAO {
   id: number;
   name: string;
   color: string;
   svg: string;
+  type: AccountType;
   parentId: number;
 }
 
-export interface CategoryWithTotal extends CategoryDAO {
+export interface CategoryDAOWithTotal extends CategoryDAO {
   total: number;
 }
 
-type WithoutParentId<E extends CategoryDAO> = Omit<E, "parentId">;
-
-export type GroupedCategory = Prefixed<
-  WithoutParentId<CategoryDAO>,
+type PrimaryCategory<C extends CategoryDAO> = Prefixed<
+  Omit<C, "parentId">,
   "primary"
-> &
-  Prefixed<NullableId<WithoutParentId<CategoryDAO>>, "secondary">;
+>;
 
-export type GroupedCategoryWithTotal = Prefixed<
-  WithoutParentId<CategoryDAO>,
-  "primary"
-> &
-  Prefixed<NullableId<WithoutParentId<CategoryWithTotal>>, "secondary">;
+type SubCategory<C extends CategoryDAO> = Prefixed<
+  Omit<C, "parentId" | "type">,
+  "secondary"
+>;
+
+type NullSubCategory<C extends CategoryDAO> = {
+  [K in keyof SubCategory<C>]: null;
+};
+
+type SecondaryCategory<C extends CategoryDAO> =
+  | SubCategory<C>
+  | NullSubCategory<C>;
+
+export const isSubCategory = <C extends CategoryDAO>(
+  secondaryCat: SecondaryCategory<C>
+): secondaryCat is SubCategory<C> => secondaryCat.secondary_id !== null;
+
+export type GroupedCategory = PrimaryCategory<CategoryDAO> &
+  SecondaryCategory<CategoryDAO>;
+
+export type GroupedCategoryWithTotal = PrimaryCategory<CategoryDAOWithTotal> &
+  SecondaryCategory<CategoryDAOWithTotal>;

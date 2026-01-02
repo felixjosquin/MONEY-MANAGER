@@ -1,8 +1,9 @@
 import {
   GroupedCategory,
   GroupedCategoryWithTotal,
+  isSubCategory,
 } from "@/db/dao/CategoryDAO";
-import { Category, CategoryWithTotal } from "@/models/Category";
+import { Category, CategoryWithTotal, SubCategory } from "@/models/Category";
 import { RGB } from "@/types";
 
 type StandaloneCategory = Omit<Category, "subCategory">;
@@ -16,13 +17,16 @@ export default class CategoryMapper {
     rawData: Input[],
     parseRawData: (raw: Input) => {
       primary: Primary;
-      secondary: Output | null;
+      secondary: SubCategory<Output> | null;
     },
-    buildPrimary: (primary: Primary, subCategories: Output[]) => Output
+    buildPrimary: (
+      primary: Primary,
+      subCategories: SubCategory<Output>[]
+    ) => Output
   ): Output[] {
     const groupMap = new Map<
       number,
-      { primary: Primary; subCategories: Output[] }
+      { primary: Primary; subCategories: SubCategory<Output>[] }
     >();
 
     for (const row of rawData) {
@@ -31,8 +35,8 @@ export default class CategoryMapper {
         groupMap.set(primary.id, { primary, subCategories: [] });
       }
       const group = groupMap.get(primary.id)!;
-      if (secondary) {
-        group.subCategories.push({ ...secondary, subCategory: null });
+      if (secondary != null) {
+        group.subCategories.push(secondary);
       }
     }
 
@@ -43,25 +47,24 @@ export default class CategoryMapper {
 
   static extractCategory(rawData: GroupedCategory): {
     primary: StandaloneCategory;
-    secondary: Category | null;
+    secondary: SubCategory<Category> | null;
   } {
     const primary: StandaloneCategory = {
       id: rawData.primary_id,
       name: rawData.primary_name,
+      type: rawData.primary_type,
       svg: rawData.primary_svg,
       color: rawData.primary_color as RGB,
     };
 
-    const secondary =
-      rawData.secondary_id !== null
-        ? {
-            id: rawData.secondary_id,
-            name: rawData.secondary_name,
-            svg: rawData.secondary_svg,
-            color: rawData.secondary_color as RGB,
-            subCategory: null,
-          }
-        : null;
+    const secondary = isSubCategory(rawData)
+      ? {
+          id: rawData.secondary_id,
+          name: rawData.secondary_name,
+          svg: rawData.secondary_svg,
+          color: rawData.secondary_color as RGB,
+        }
+      : null;
 
     return {
       primary,
@@ -69,21 +72,22 @@ export default class CategoryMapper {
     };
   }
 
-  static extractCategoryWithTotal({
-    secondary_total,
-    ...data
-  }: GroupedCategoryWithTotal): {
+  static extractCategoryWithTotal(rawData: GroupedCategoryWithTotal): {
     primary: StandaloneCategory;
-    secondary: CategoryWithTotal | null;
+    secondary: SubCategory<CategoryWithTotal> | null;
   } {
-    const { primary, secondary: secondaryCategory } =
-      CategoryMapper.extractCategory(data);
-    const secondary = secondaryCategory
-      ? { ...secondaryCategory, total: secondary_total, subCategory: null }
-      : null;
+    const { primary, secondary } = CategoryMapper.extractCategory(rawData);
+
+    if (secondary === null || !isSubCategory(rawData)) {
+      return {
+        primary,
+        secondary: null,
+      };
+    }
+
     return {
       primary,
-      secondary,
+      secondary: { ...secondary, total: rawData.secondary_total },
     };
   }
 

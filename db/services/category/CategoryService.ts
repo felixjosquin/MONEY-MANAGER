@@ -9,7 +9,7 @@ import {
 export default class CategoryService {
   static async getCategory(db: SQLiteDatabase): Promise<void> {
     const groupedCategory = await db.getAllAsync<GroupedCategory>(
-      CategoryConfig.getGroupedCategory
+      CategoryConfig.fetchGroupedCategoryQuery()
     );
     console.log(JSON.stringify(groupedCategory, null, 2));
     console.log(
@@ -19,7 +19,7 @@ export default class CategoryService {
 
   static async getCategoryWithTotal(db: SQLiteDatabase): Promise<void> {
     const groupedCategory = await db.getAllAsync<GroupedCategoryWithTotal>(
-      CategoryConfig.getGroupedCategoryWithTotal
+      CategoryConfig.fetchGroupedCategoryWithTotalQuery()
     );
     console.log(JSON.stringify(groupedCategory, null, 2));
     console.log(

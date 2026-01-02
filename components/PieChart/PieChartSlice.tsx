@@ -1,4 +1,4 @@
-import { IconsName, RGB } from "@/types";
+import { IconName, RGB } from "@/types";
 import { generateArc } from "./describeArc";
 import { G, Path } from "react-native-svg";
 import { ICONS } from "@/constants/icons/icons";
@@ -14,7 +14,7 @@ type Props = {
   endAngle: number;
   innerRadius: number;
   outerRadius: number;
-  svgId: IconsName;
+  svgId: IconName;
 };
 
 export const PieChartSlice = ({

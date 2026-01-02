@@ -1,14 +1,17 @@
-import { RGB } from "@/types";
+import { AccountType, RGB } from "@/types";
 
 export interface Category {
   id: number;
   name: string;
   svg: string;
   color: RGB;
-  subCategory: Category[] | null;
+  type: AccountType;
+  subCategory: SubCategory<Category>[] | null;
 }
 
 export interface CategoryWithTotal extends Category {
   total: number;
-  subCategory: CategoryWithTotal[] | null;
+  subCategory: SubCategory<CategoryWithTotal>[] | null;
 }
+
+export type SubCategory<C> = Omit<C, "subCategory" | "type">;

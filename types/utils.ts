@@ -5,3 +5,8 @@ export type Prefixed<T, Prefix extends string> = {
 export type NullableFields<T> = {
   [K in keyof T]: T[K] | null;
 };
+
+export enum AccountType {
+  Expense = "EXPENSE",
+  Income = "INCOME",
+}

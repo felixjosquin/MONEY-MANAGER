@@ -1,5 +1,5 @@
 import Svg from "react-native-svg";
-import { IconsName, RGB } from "@/types";
+import { IconName, RGB } from "@/types";
 import { ViewProps, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { PieChartSlice } from "./PieChartSlice";
